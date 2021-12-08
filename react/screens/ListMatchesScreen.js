@@ -3,11 +3,10 @@ import React from 'react';
 import Login from "../components/Login";
 import ListMatches from "../components/Matches/ListMatches";
 
-export default function listMatchesScreen({ navigation }) {
+export default function listMatchesScreen({ navigation , route}) {
   return (
     <>
-      <Text>List des matchs</Text>
-      <ListMatches navigation={navigation}/>
+      <ListMatches navigation={navigation} username={route.params.username} jwtoken={route.params.jwtoken}/>
     </>
   );
 }

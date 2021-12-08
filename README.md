@@ -1,3 +1,11 @@
+http://10.33.0.66:3002/
+
+Lancer émulateur Android\
+Puis éxecuter dans le terminal
+```
+npx react-native run-android
+```
+
 # Objectifs
 
 Créer une application permettant de jouer à Chi Fou Mi.
@@ -10,57 +18,53 @@ L'authentification se fait par token **JWT**
 
 # Endpoints
 
-Base de l'URL: à voir en cours  [http://fauques.freeboxos.fr:3000/matches](http://fauques.freeboxos.fr:3000/)
+Base de l'URL: à voir en cours
 
 ### POST /login
-ConnexionScreen => TextInput Username et renvoi un token JWT de connexion\
 - Requête
 ```json
 {
-    "username": "monpseudo"
+  "username": "monpseudo"
 }
 ```
 - Réponse
 ```json
 // Code: 200
 {
-    "token":"token"
+  "token":"token"
 }
 ```
 
 ### GET /matches
-ListMatchesScreen => List des matches\
-
 - Body
 ```json
 // Code: 200
 [
-    {
-      "user1": {
-        "_id": "24aefbbb-8def-4e2c-b19a-929ff55020c0",
-        "username": "player1",
-      },
-      "user2": null, //{"_id": "24aefbbb-8def-4e2c-b19a-929ff55020c1","username":   "player2"}
-      "turns": [],
-      "_id": "61979ce9ff4a0e83e02df260",
-    }
-    // ,...
-]
-```
-
-### GET /matches/:id
-MatcheScreen => Match\
-- Body
-```json
-// Code: 200
-{
+  {
     "user1": {
-    "_id": "24aefbbb-8def-4e2c-b19a-929ff55020c0",
-    "username": "player1",
+      "_id": "24aefbbb-8def-4e2c-b19a-929ff55020c0",
+      "username": "player1",
     },
     "user2": null, //{"_id": "24aefbbb-8def-4e2c-b19a-929ff55020c1","username":   "player2"}
     "turns": [],
     "_id": "61979ce9ff4a0e83e02df260",
+  }
+  // ,...
+]
+```
+
+### GET /matches/:id
+- Body
+```json
+// Code: 200
+{
+  "user1": {
+    "_id": "24aefbbb-8def-4e2c-b19a-929ff55020c0",
+    "username": "player1",
+  },
+  "user2": null, //{"_id": "24aefbbb-8def-4e2c-b19a-929ff55020c1","username":   "player2"}
+  "turns": [],
+  "_id": "61979ce9ff4a0e83e02df260",
 }
 ```
 
@@ -68,7 +72,7 @@ MatcheScreen => Match\
 Si un match est en attente (pas de user2), on le modifie pour ajouter le **user2**
 - Body : Aucun
 - Réponse
-  - si pas de match en attente pour l'utilisateur courant 
+    - si pas de match en attente pour l'utilisateur courant
 ```json
 // Code: 201
 {
@@ -99,12 +103,12 @@ Si un match est en attente (pas de user2), on le modifie pour ajouter le **user2
 }
 ```
 - Réponse
-  - **Erreur 400**
-    - si **idTurn** est invalide `{ turn: "not found" }`
-    - si **idTurn** est déjà terminé `{ turn: "not last" }`
-    - si **match** est déjà terminé `{ match: "Match already finished" }`
-    - si le joueur a déjà joué le tour et attend l'adversaire `{ user: "move already given" }`
-  - Si tout se passe bien **Code 202**
+    - **Erreur 400**
+        - si **idTurn** est invalide `{ turn: "not found" }`
+        - si **idTurn** est déjà terminé `{ turn: "not last" }`
+        - si **match** est déjà terminé `{ match: "Match already finished" }`
+        - si le joueur a déjà joué le tour et attend l'adversaire `{ user: "move already given" }`
+    - Si tout se passe bien **Code 202**
 
 
 # Notifications du match

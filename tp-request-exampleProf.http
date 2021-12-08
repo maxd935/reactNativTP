@@ -1,17 +1,14 @@
-//http://fauques.freeboxos.fr:3000/
 POST http://fauques.freeboxos.fr:3000/login
 Content-Type: application/json
+
 {
   "username": "test3"
 }
 
-# username: test, token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIyNGFlZmJiYi04ZGVmLTRlMmMtYjE5YS05MjlmZjU1MDIwYzAiLCJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE2MzczMjEwODUsImV4cCI6MTY2ODg3ODY4NX0.mE6rJgcC3HSi-vDyzjsyP1XKYv_SK9BL_NAZ66MOWzQ
-# username: test2, token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI5ZmNiYzU3ZS1iNGExLTRhN2MtYmMyYS1jNjE5YjgzMDY2YjkiLCJ1c2VybmFtZSI6InRlc3QyIiwiaWF0IjoxNjM3MzIxMDcyLCJleHAiOjE2Njg4Nzg2NzJ9.4lRu-oi-5punFTcw4XlDSH6A1-z-oR-HTLTmZF2B43E
-# username: test3, token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI0NTIwMjYzNy00MGE4LTQ3NzAtODY2NC03MGNjNzIxZDFiY2IiLCJ1c2VybmFtZSI6InRlc3QzIiwiaWF0IjoxNjM3MzI0NTU5LCJleHAiOjE2Njg4ODIxNTl9.uCIsgT68CCr0w5M9AwB8XGot53UwtFSkPqLk_WCwHuw
 
 ### GET Matches
 GET http://fauques.freeboxos.fr:3000/matches
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIyNGFlZmJiYi04ZGVmLTRlMmMtYjE5YS05MjlmZjU1MDIwYzAiLCJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE2MzczMjEwODUsImV4cCI6MTY2ODg3ODY4NX0.mE6rJgcC3HSi-vDyzjsyP1XKYv_SK9BL_NAZ66MOWzQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTA1ZTU0Ni1lZjBhLTQ5MzctOWQ2MS1hYzQxYjVlNTk0NzUiLCJ1c2VybmFtZSI6InRlc3QzIiwiaWF0IjoxNjM4OTYyODIzLCJleHAiOjE2NzA1MjA0MjN9.n2OQsc9ZhdioQ7QdZl-e0NJqQczpotCfKtLySQiP9ds
 
 ### GET Match test2
 GET http://localhost:3002/matches/61979af0b43a2d12d721054e
@@ -23,8 +20,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI0NTIwMjYzN
 
 
 ### POST MATCH test
-POST http://localhost:3002/matches
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIyNGFlZmJiYi04ZGVmLTRlMmMtYjE5YS05MjlmZjU1MDIwYzAiLCJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE2MzczMjEwODUsImV4cCI6MTY2ODg3ODY4NX0.mE6rJgcC3HSi-vDyzjsyP1XKYv_SK9BL_NAZ66MOWzQ
+POST http://fauques.freeboxos.fr:3000/matches
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTA1ZTU0Ni1lZjBhLTQ5MzctOWQ2MS1hYzQxYjVlNTk0NzUiLCJ1c2VybmFtZSI6InRlc3QzIiwiaWF0IjoxNjM4OTYyODIzLCJleHAiOjE2NzA1MjA0MjN9.n2OQsc9ZhdioQ7QdZl-e0NJqQczpotCfKtLySQiP9ds
 
 ### POST MATCH test2
 POST http://localhost:3002/matches

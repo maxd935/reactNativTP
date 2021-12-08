@@ -1,24 +1,22 @@
-import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import ListMatches from './components/Matches/ListMatches';
-import Login from './components/Login';
-import { Button, Text } from "react-native";
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
 import LoginScreen from "./screens/LoginScreen";
 import listMatchesScreen from "./screens/ListMatchesScreen";
-import CartMatch from "./components/Matches/CartMatch";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MatcheScreen from "./screens/MatcheScreen";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import PlayMatchScreen from "./screens/PlayMatchScreen";
 
-const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function AppChiFouMi() {
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Login">
-        <Tab.Screen name="Login" component={LoginScreen} />
-        <Tab.Screen name="List Matches" component={listMatchesScreen} />
-        <Tab.Screen name="MatcheScreen" component={MatcheScreen} />
-      </Tab.Navigator>
+      <Stack.Navigator initialRouteName="LoginScreen">
+        <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ title: 'Login' }} />
+        <Stack.Screen name="listMatchesScreen" component={listMatchesScreen} options={{ title: 'List matches', headerBackVisible:false }}/>
+        <Stack.Screen name="MatcheScreen" component={MatcheScreen} options={{ title: 'Show Match' }}/>
+        <Stack.Screen name="PlayMatchScreen" component={PlayMatchScreen} options={{ title: 'Play Match' }}/>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
