@@ -1,4 +1,4 @@
-import { Alert, Button, FlatList, StyleSheet, Text, View } from "react-native";
+import {Alert, FlatList, StyleSheet, Text, View} from 'react-native';
 import ListCartMatch from './ListCartMatch';
 import React, {useEffect, useState} from 'react';
 
@@ -36,7 +36,16 @@ const DATA = [
       username: 'player1',
     },
     user2: {_id: '24aefbbb-8def-4e2c-b19a-929ff55020c1', username: 'player2'},
-    turns: [],
+    turns: [
+      {
+        user2: 'rock',
+        user1: 'rock',
+        winner: 'draw',
+      },
+      {
+        user1: 'rock',
+      },
+    ],
     _id: '4',
   },
   {
@@ -57,15 +66,6 @@ const DATA = [
     turns: [],
     _id: '6',
   },
-  {
-    user1: {
-      _id: '24aefbbb-8def-4e2c-b19a-929ff55020c0',
-      username: 'player1',
-    },
-    user2: {_id: '24aefbbb-8def-4e2c-b19a-929ff55020c1', username: 'player2'},
-    turns: [],
-    _id: '7',
-  },
 ];
 
 export default function ListMatches({navigation, username, jwtoken}) {
@@ -76,10 +76,11 @@ export default function ListMatches({navigation, username, jwtoken}) {
   avec le Jwtoken
    */
   useEffect(() => {
-    Alert.alert("List Matches  (GET /matches)")
+    console.log('UseEffect ListMatches');
+    Alert.alert('List Matches  (GET /matches)');
     fetch('http://fauques.freeboxos.fr:3000/matches', {
       headers: {
-        Authorization: 'Bearer '.jwtoken,
+        Authorization: 'Bearer ' + jwtoken,
       },
     })
       .then(res => res.json())
@@ -90,12 +91,12 @@ export default function ListMatches({navigation, username, jwtoken}) {
 
   return (
     <View>
-      <Text style={styles.user}> Bienvenue {username} (jwtoken : {jwtoken})</Text>
+      <Text style={styles.user}>Bienvenue {username}</Text>
       <Text> List DATA (Niv 1)</Text>
       <FlatList
         data={DATA}
         renderItem={({item}) => (
-          <ListCartMatch navigation={navigation} style={styles.cart} match={item} />
+          <ListCartMatch navigation={navigation} match={item} jwtoken={jwtoken} />
         )}
         keyExtractor={item => item._id}
       />
@@ -103,7 +104,7 @@ export default function ListMatches({navigation, username, jwtoken}) {
       <FlatList
         data={matchs}
         renderItem={({item}) => (
-          <ListCartMatch navigation={navigation} style={styles.cart} match={item} />
+          <ListCartMatch navigation={navigation} match={item} jwtoken={jwtoken} />
         )}
         keyExtractor={item => item._id}
       />
@@ -112,15 +113,10 @@ export default function ListMatches({navigation, username, jwtoken}) {
 }
 
 const styles = StyleSheet.create({
-  cart: {
-    margin: 10,
-    borderWidth: 1,
-    padding: 10,
-  },
   user: {
     textAlign: 'center',
     color: 'black',
-    height: 40,
+    fontSize: 20,
     padding: 10,
   },
 });

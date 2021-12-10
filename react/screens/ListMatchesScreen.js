@@ -1,7 +1,5 @@
-import {Text} from 'react-native';
 import React from 'react';
-import Login from "../components/Login";
-import ListMatches from "../components/Matches/ListMatches";
+import ListMatches from "../components/List/ListMatches";
 
 export default function listMatchesScreen({ navigation , route}) {
   return (

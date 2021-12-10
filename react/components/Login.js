@@ -1,4 +1,4 @@
-import { Text, TextInput, View, StyleSheet, Button, Alert } from "react-native";
+import {Text, TextInput, View, StyleSheet, Button, Alert} from 'react-native';
 import React, {useEffect} from 'react';
 
 export default function Login({navigation}) {
@@ -12,12 +12,12 @@ export default function Login({navigation}) {
    */
   useEffect(() => {
     if (username.length <= 0) {
-      console.log('username Vide');
+      console.log('Username Vide');
     } else {
       console.log('UseEffect Username');
       const obj = {username: username};
       console.log(JSON.stringify(obj));
-      Alert.alert("Login  (POST /login)")
+      Alert.alert('Login  (POST /login)');
 
       // Probleme Fetch
       fetch('http://fauques.freeboxos.fr:3000/login', {
@@ -28,11 +28,12 @@ export default function Login({navigation}) {
         },
         body: JSON.stringify(obj),
       })
-        .then(res => res.status === 200)
         .then(res => {
           res.json();
         })
         .then(data => {
+          console.log('data is');
+          console.log(data);
           setJwtoken(data.token);
         })
         .catch(error => {
@@ -73,16 +74,13 @@ export default function Login({navigation}) {
       {username.length > 0 && (
         <Text style={styles.text}> Username is {username}</Text>
       )}
-      {jwtoken.length > 0 && (
-        <Text style={styles.text}> Jwtoken is {jwtoken}</Text>
-      )}
       <Button
         title="Go List matches (Facultatif)"
         color="#9999aa"
         onPress={() =>
           navigation.navigate('listMatchesScreen', {
-            jwtoken: jwtoken,
-            username: username,
+            jwtoken,
+            username,
           })
         }
       />
