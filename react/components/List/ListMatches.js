@@ -1,7 +1,8 @@
-import {Alert, FlatList, StyleSheet, Text, View} from 'react-native';
+import { Alert, Button, FlatList, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import ListCartMatch from './ListCartMatch';
 import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../../context/UserContext";
+import MatchContext from "../../context/MatchContext";
 
 const DATA = [
   {
@@ -70,56 +71,71 @@ const DATA = [
 ];
 
 export default function ListMatches({navigation}) {
-  const [matchs, setMatchs] = useState([]);
 
-  const {selectors} = useContext(UserContext);
+  const {selectorsUser} = useContext(UserContext);
 
-  /*
-  Recupere la liste de match disponible
-  avec le Jwtoken
-   */
+  const {selectorsMatch, actionsMatch} = useContext(MatchContext);
+  const matches = selectorsMatch.getMatches();
+
+
   useEffect(() => {
-    console.log('UseEffect ListMatches');
-    Alert.alert('List Matches  (GET /matches)');
-    fetch('http://fauques.freeboxos.fr:3000/matches', {
-      headers: {
-        Authorization: 'Bearer ' + selectors.getJwtoken(),
-      },
-    })
-      .then(res => res.json())
-      .then(data => {
-        setMatchs(data);
-      });
-  }, [matchs]);
+    //actions.loadMatches(selectors.getJwtoken()) && actions.loadMatches(selectors.getJwtoken());
+    actionsMatch.loadMatches(selectorsUser.getJwtoken()) && actionsMatch.loadMatches(selectorsUser.getJwtoken());
+  }, []);
+
+  const handlePlay = () => () => {
+    actionsMatch.playMatch(selectorsUser.getJwtoken(), navigation);
+  }
 
   return (
-    <View>
-      <Text style={styles.user}>Bienvenue {selectors.getUsername()}</Text>
-      <Text> List DATA (Niv 1)</Text>
+    <View style={styles.container}>
+      <Text style={styles.user}>Player {selectorsUser.getUsername()}</Text>
       <FlatList
-        data={DATA}
+        style={styles.list}
+        data={matches}
         renderItem={({item}) => (
           <ListCartMatch navigation={navigation} match={item} />
         )}
         keyExtractor={item => item._id}
       />
-      <Text> List Matchs API (Niv 2)</Text>
-      <FlatList
-        data={matchs}
-        renderItem={({item}) => (
-          <ListCartMatch navigation={navigation} match={item} />
-        )}
-        keyExtractor={item => item._id}
-      />
+      <TouchableHighlight
+        style={styles.touchable}
+        onPress={handlePlay()}>
+        <View style={styles.button}>
+          <Text style={styles.text}>PLAY</Text>
+        </View>
+      </TouchableHighlight>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container : {
+    flew:1,
+  },
   user: {
     textAlign: 'center',
     color: 'black',
     fontSize: 20,
     padding: 10,
+  },
+  list : {
+    height: '75%',
+  },
+  touchable: {
+    height: '18%',
+    backgroundColor: "#fc7c13",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button: {
+    padding: 5,
+    margin: 5,
+  },
+  text: {
+    color: "#000000",
+    fontWeight: "bold",
+    fontSize:40,
+    letterSpacing:5,
   },
 });
