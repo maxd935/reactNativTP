@@ -1,6 +1,7 @@
 import {Alert, FlatList, StyleSheet, Text, View} from 'react-native';
 import ListCartMatch from './ListCartMatch';
-import React, {useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from "react";
+import UserContext from "../../context/UserContext";
 
 const DATA = [
   {
@@ -68,8 +69,10 @@ const DATA = [
   },
 ];
 
-export default function ListMatches({navigation, username, jwtoken}) {
+export default function ListMatches({navigation}) {
   const [matchs, setMatchs] = useState([]);
+
+  const {selectors} = useContext(UserContext);
 
   /*
   Recupere la liste de match disponible
@@ -80,7 +83,7 @@ export default function ListMatches({navigation, username, jwtoken}) {
     Alert.alert('List Matches  (GET /matches)');
     fetch('http://fauques.freeboxos.fr:3000/matches', {
       headers: {
-        Authorization: 'Bearer ' + jwtoken,
+        Authorization: 'Bearer ' + selectors.getJwtoken(),
       },
     })
       .then(res => res.json())
@@ -91,12 +94,12 @@ export default function ListMatches({navigation, username, jwtoken}) {
 
   return (
     <View>
-      <Text style={styles.user}>Bienvenue {username}</Text>
+      <Text style={styles.user}>Bienvenue {selectors.getUsername()}</Text>
       <Text> List DATA (Niv 1)</Text>
       <FlatList
         data={DATA}
         renderItem={({item}) => (
-          <ListCartMatch navigation={navigation} match={item} jwtoken={jwtoken} />
+          <ListCartMatch navigation={navigation} match={item} />
         )}
         keyExtractor={item => item._id}
       />
@@ -104,7 +107,7 @@ export default function ListMatches({navigation, username, jwtoken}) {
       <FlatList
         data={matchs}
         renderItem={({item}) => (
-          <ListCartMatch navigation={navigation} match={item} jwtoken={jwtoken} />
+          <ListCartMatch navigation={navigation} match={item} />
         )}
         keyExtractor={item => item._id}
       />

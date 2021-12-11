@@ -1,11 +1,15 @@
 import {Alert, Button, FlatList, StyleSheet, Text, View} from 'react-native';
 import CartMatchUser from './CartMatchUser';
-import React, {useEffect} from 'react';
+import React, { useContext, useEffect } from "react";
 import CartTurns from './CartTurns';
+import UserContext from "../../context/UserContext";
 
-export default function CartMatch({match, navigation, jwtoken}) {
-  const [boutonPlay, setboutonPlay] = React.useState(null);
+export default function CartMatch({match, navigation}) {
+  const [boutonPlay, setBoutonPlay] = React.useState(null);
   const [matchApi, setMatchApi] = React.useState(match);
+
+  const {selectors} = useContext(UserContext);
+
 
   /*
   Recupere le match disponible à partir de l'id
@@ -16,7 +20,7 @@ export default function CartMatch({match, navigation, jwtoken}) {
     Alert.alert('Matche  (GET /matches/:id)');
     fetch('http://fauques.freeboxos.fr:3000/matches/' + match._id, {
       headers: {
-        Authorization: 'Bearer ' + jwtoken,
+        Authorization: 'Bearer ' + selectors.getJwtoken(),
       },
     })
       .then(res => res.json())
@@ -32,10 +36,10 @@ export default function CartMatch({match, navigation, jwtoken}) {
   useEffect(() => {
     if (matchApi.user2 && matchApi.user1) {
       console.log('Match en cours');
-      setboutonPlay(<Button title="Playing" disabled onPress={handlePlay()} />);
+      setBoutonPlay(<Button title="Playing" disabled onPress={handlePlay()} />);
     } else {
       console.log("Match en attente d'un joueur");
-      setboutonPlay(<Button title="Play" onPress={handlePlay()} />);
+      setBoutonPlay(<Button title="Play" onPress={handlePlay()} />);
     }
   }, [matchApi]);
 
@@ -47,7 +51,7 @@ export default function CartMatch({match, navigation, jwtoken}) {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + jwtoken,
+        Authorization: 'Bearer ' + selectors.getJwtoken(),
       },
     })
       .then(res => {
@@ -62,8 +66,7 @@ export default function CartMatch({match, navigation, jwtoken}) {
       });
     // Event PLAYER_JOIN
     navigation.navigate('PlayMatchScreen', {
-      match,
-      jwtoken,
+      match
     });
   };
 

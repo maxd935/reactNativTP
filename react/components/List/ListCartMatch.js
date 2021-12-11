@@ -2,13 +2,13 @@ import { Button, StyleSheet, Text, View } from "react-native";
 import CartMatchUser from '../Matches/CartMatchUser';
 import React from 'react';
 
-export default function ListCartMatch({ match, navigation, jwtoken }) {
+export default function ListCartMatch({ match, navigation }) {
   return (
     <View style={styles.cart}>
       <Text>Match n°{match._id}</Text>
       <CartMatchUser user={match.user1} />
       <CartMatchUser user={match.user2} />
-      <Button title="Show" onPress={() => navigation.navigate('MatcheScreen', { match, jwtoken } )} />
+      <Button title="Show" onPress={() => navigation.navigate('MatcheScreen', { match } )} />
     </View>
   );
 }

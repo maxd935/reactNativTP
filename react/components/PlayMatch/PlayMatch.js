@@ -1,8 +1,11 @@
 import { Alert, StyleSheet, Text, TouchableHighlight, View } from "react-native";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
+import UserContext from "../../context/UserContext";
 
-export default function PlayMatch({ navigation, match, jwtoken }) {
+export default function PlayMatch({ navigation, match }) {
   const [nbrTurns, setNbrTurns] = React.useState(1);
+
+  const {selectors} = useContext(UserContext);
 
   /*
   Jouer le coup du match id
@@ -18,7 +21,7 @@ export default function PlayMatch({ navigation, match, jwtoken }) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: "Bearer " + jwtoken,
+          Authorization: "Bearer " + selectors.getJwtoken(),
         },
         body: JSON.stringify({
           move: choix, // "rock", "paper", "scissors"

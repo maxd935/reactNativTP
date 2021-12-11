@@ -4,7 +4,7 @@ import PlayMatch from "../components/PlayMatch/PlayMatch";
 export default function PlayMatchScreen({navigation, route}) {
   return (
     <>
-      <PlayMatch navigation={navigation} match={route.params.match} jwtoken={route.params.jwtoken}/>
+      <PlayMatch navigation={navigation} match={route.params.match} />
     </>
   );
 }

@@ -1,62 +1,43 @@
 import {Text, TextInput, View, StyleSheet, Button, Alert} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
+import UserContext from '../context/UserContext';
 
 export default function Login({navigation}) {
   const [text, setText] = React.useState('');
   const [username, setUsername] = React.useState('');
   const [jwtoken, setJwtoken] = React.useState('');
 
-  /*
-   Lorsque Username est remplit
-   Il est soumis au serveur afin de récuperer un token de connexion
-   */
-  useEffect(() => {
-    if (username.length <= 0) {
-      console.log('Username Vide');
-    } else {
-      console.log('UseEffect Username');
-      const obj = {username: username};
-      console.log(JSON.stringify(obj));
-      Alert.alert('Login  (POST /login)');
 
-      // Probleme Fetch
-      fetch('http://fauques.freeboxos.fr:3000/login', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(obj),
-      })
-        .then(res => {
-          res.json();
-        })
-        .then(data => {
-          console.log('data is');
-          console.log(data);
-          setJwtoken(data.token);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }
-  }, [username]);
+  const {actions, selectors} = useContext(UserContext);
+
+
+  // Changer le username
+  const handleButtonUsername = username => () => {
+    actions.setUsername(username);
+    setUsername(username);
+  };
 
   /*
-   Lorsque Jwtoken est récuperer
-   redirection sur List Matches
+  Verifie si l'user est connecter
+  Si oui redirection
    */
   useEffect(() => {
-    if (jwtoken.length <= 0) {
-      console.log('jwtoken Vide');
-    } else {
-      console.log('UseEffect Jwtoken');
-      navigation.navigate('listMatchesScreen', {
-        jwtoken: jwtoken,
-        username: username,
-      });
+    if (selectors.getJwtoken().length > 0) {
+      navigation.navigate('listMatchesScreen');
     }
   }, [jwtoken]);
+
+
+  /*
+  Verifie si l'user est modifier
+  Si oui il charge un token de connexion
+   */
+  useEffect(() => {
+    if (selectors.getUsername().length > 0) {
+      actions.loadJwtoken(username);
+      setJwtoken(selectors.getJwtoken());
+    }
+  }, [username]);
 
   return (
     <View style={styles.container}>
@@ -66,23 +47,14 @@ export default function Login({navigation}) {
         value={text}
         placeholder="Tape your Username"
       />
-      <Button
-        title="Continue"
-        color="#9994ff"
-        onPress={() => setUsername(text)}
-      />
-      {username.length > 0 && (
-        <Text style={styles.text}> Username is {username}</Text>
+      <Button title="Submit" color="#9994ff" onPress={handleButtonUsername(text)} />
+      {selectors.getUsername().length > 0 && (
+        <Text style={styles.text}> Username is {selectors.getUsername()}</Text>
       )}
       <Button
         title="Go List matches (Facultatif)"
         color="#9999aa"
-        onPress={() =>
-          navigation.navigate('listMatchesScreen', {
-            jwtoken,
-            username,
-          })
-        }
+        onPress={() => navigation.navigate('listMatchesScreen')}
       />
     </View>
   );
@@ -101,8 +73,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
     color: 'black',
-    height: 40,
-    margin: 20,
-    padding: 10,
+    height: 20,
+    margin: 10,
   },
 });

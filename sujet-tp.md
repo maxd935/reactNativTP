@@ -10,7 +10,7 @@ L'authentification se fait par token **JWT**
 
 # Endpoints
 
-Base de l'URL: à voir en cours  [http://fauques.freeboxos.fr:3000/matches](http://fauques.freeboxos.fr:3000/)
+Base de l'URL: à voir en cours  [http://fauques.freeboxos.fr:3000/](http://fauques.freeboxos.fr:3000/)
 
 ### POST /login
 ConnexionScreen => TextInput Username et renvoi un token JWT de connexion\
@@ -68,7 +68,7 @@ MatcheScreen => Match\
 Si un match est en attente (pas de user2), on le modifie pour ajouter le **user2**
 - Body : Aucun
 - Réponse
-  - si pas de match en attente pour l'utilisateur courant 
+  - si pas de match en attente pour l'utilisateur courant / Créer une partie
 ```json
 // Code: 201
 {
