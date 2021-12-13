@@ -8,12 +8,6 @@ export default function Login({navigation}) {
 
   const {actionsUser, selectorsUser} = useContext(UserContext);
 
-  // Changer le username
-  const handleButtonUsername = username => () => {
-    actionsUser.setUsername(username);
-    setUsername(username);
-  };
-
   /*
   Verifie si l'user est modifier
   Si oui il charge un token de connexion
@@ -23,6 +17,13 @@ export default function Login({navigation}) {
       actionsUser.loadJwtoken(username, navigation);
     }
   }, [username]);
+
+
+  // Changer le username
+  const handleButtonUsername = username => () => {
+    actionsUser.setUsername(username);
+    setUsername(username);
+  };
 
   return (
     <View style={styles.container}>
@@ -36,11 +37,6 @@ export default function Login({navigation}) {
       {selectorsUser.getUsername().length > 0 && (
         <Text style={styles.text}> Username is {selectorsUser.getUsername()}</Text>
       )}
-      { false && <Button
-        title="Go List matches (Facultatif)"
-        color="#9999aa"
-        onPress={() => navigation.navigate('listMatchesScreen')}
-      />}
     </View>
   );
 }

@@ -12,7 +12,7 @@ export default function ListCartMatch({ match, navigation }) {
         <CartMatchUser user={match.user2} color={'red'} />
       </View>
       { match.winner && <Text style={styles.winner}>Result is {match.winner}</Text>}
-      <Button title="Show" onPress={() => navigation.navigate("MatcheScreen", { match })} />
+      <Button title="Show" onPress={() => navigation.navigate("MatcheScreen", { match: match._id })} />
     </View>
   );
 }

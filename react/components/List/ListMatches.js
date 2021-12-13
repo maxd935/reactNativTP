@@ -4,71 +4,6 @@ import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../../context/UserContext";
 import MatchContext from "../../context/MatchContext";
 
-const DATA = [
-  {
-    user1: {
-      _id: '24aefbbb-8def-4e2c-b19a-929ff55020c0',
-      username: 'player1',
-    },
-    user2: null, //{"_id": "24aefbbb-8def-4e2c-b19a-929ff55020c1","username":   "player2"}
-    turns: [],
-    _id: '1',
-  },
-  {
-    user1: {
-      _id: '24aefbbb-8def-4e2c-b19a-929ff55020c0',
-      username: 'player1',
-    },
-    user2: null, //{"_id": "24aefbbb-8def-4e2c-b19a-929ff55020c1","username":   "player2"},
-    turns: [],
-    _id: '2',
-  },
-  {
-    user1: {
-      _id: '24aefbbb-8def-4e2c-b19a-929ff55020c0',
-      username: 'player1',
-    },
-    user2: null, //{"_id": "24aefbbb-8def-4e2c-b19a-929ff55020c1","username":   "player2"},
-    turns: [],
-    _id: '3',
-  },
-  {
-    user1: {
-      _id: '24aefbbb-8def-4e2c-b19a-929ff55020c0',
-      username: 'player1',
-    },
-    user2: {_id: '24aefbbb-8def-4e2c-b19a-929ff55020c1', username: 'player2'},
-    turns: [
-      {
-        user2: 'rock',
-        user1: 'rock',
-        winner: 'draw',
-      },
-      {
-        user1: 'rock',
-      },
-    ],
-    _id: '4',
-  },
-  {
-    user1: {
-      _id: '24aefbbb-8def-4e2c-b19a-929ff55020c0',
-      username: 'player1',
-    },
-    user2: {_id: '24aefbbb-8def-4e2c-b19a-929ff55020c1', username: 'player2'},
-    turns: [],
-    _id: '5',
-  },
-  {
-    user1: {
-      _id: '24aefbbb-8def-4e2c-b19a-929ff55020c0',
-      username: 'player1',
-    },
-    user2: {_id: '24aefbbb-8def-4e2c-b19a-929ff55020c1', username: 'player2'},
-    turns: [],
-    _id: '6',
-  },
-];
 
 export default function ListMatches({navigation}) {
 
@@ -79,7 +14,6 @@ export default function ListMatches({navigation}) {
 
 
   useEffect(() => {
-    //actions.loadMatches(selectors.getJwtoken()) && actions.loadMatches(selectors.getJwtoken());
     actionsMatch.loadMatches(selectorsUser.getJwtoken()) && actionsMatch.loadMatches(selectorsUser.getJwtoken());
   }, []);
 
@@ -87,9 +21,17 @@ export default function ListMatches({navigation}) {
     actionsMatch.playMatch(selectorsUser.getJwtoken(), navigation);
   };
 
+  const handleActualise = () => () => {
+    actionsMatch.loadMatches(selectorsUser.getJwtoken()) && actionsMatch.loadMatches(selectorsUser.getJwtoken());
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.user}>Player {selectorsUser.getUsername()}</Text>
+      <View>
+        <Button title="Actualiser les matches" onPress={handleActualise()}/>
+        <Text>Nbr matches {selectorsMatch.getMatchesCount()}</Text>
+      </View>
       <FlatList
         style={styles.list}
         data={matches}
@@ -120,10 +62,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   list : {
-    height: '75%',
+    height: '70%',
   },
   touchable: {
-    height: '18%',
+    height: '15%',
     backgroundColor: "#fc7c13",
     alignItems: "center",
     justifyContent: "center",

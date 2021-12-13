@@ -5,24 +5,21 @@ import CartTurns from './CartTurns';
 import UserContext from '../../context/UserContext';
 import MatchContext from '../../context/MatchContext';
 
-export default function CartMatch({match, navigation}) {
+export default function CartMatch({idMatch, navigation}) {
   const [boutonPlay, setBoutonPlay] = React.useState(null);
-  //const [matchApi, setMatchApi] = React.useState(match);
 
   const {selectorsUser} = useContext(UserContext);
 
   const {actionsMatch, selectorsMatch} = useContext(MatchContext);
   const matchId = selectorsMatch.getMatch();
-  //const matchId = selectorsMatch.getMatchId(match._id);
 
   /*
     Recupere le match disponible à partir de l'id
     avec le Jwtoken
-     */
+  */
   useEffect(() => {
-    //actions.loadMatches(selectors.getJwtoken()) && actions.loadMatches(selectors.getJwtoken());
-    actionsMatch.loadMatch(selectorsUser.getJwtoken(), match._id) &&
-      actionsMatch.loadMatch(selectorsUser.getJwtoken(), match._id);
+    actionsMatch.loadMatch(selectorsUser.getJwtoken(), idMatch) &&
+      actionsMatch.loadMatch(selectorsUser.getJwtoken(), idMatch);
   }, []);
 
   /*
@@ -31,12 +28,14 @@ export default function CartMatch({match, navigation}) {
    */
   useEffect(() => {
     console.log(matchId);
-    if (matchId.turns.length === 3) {
-      setBoutonPlay(<Button title="Finish" disabled onPress={handlePlay()} />);
-    } else if (matchId.user2 && matchId.user1) {
-      setBoutonPlay(<Button title="Playing" disabled onPress={handlePlay()} />);
-    } else {
-      setBoutonPlay(<Button title="Play" onPress={handlePlay()} />);
+    if (matchId){
+      if (matchId.turns.length === 3) {
+        setBoutonPlay(<Button title="Finish" disabled onPress={handlePlay()} />);
+      } else if (matchId.user2 && matchId.user1) {
+        setBoutonPlay(<Button title="Playing" disabled onPress={handlePlay()} />);
+      } else {
+        setBoutonPlay(<Button title="Waiting player" disabled onPress={handlePlay()} />);
+      }
     }
   }, [matchId]);
 
@@ -48,18 +47,18 @@ export default function CartMatch({match, navigation}) {
     <View style={styles.cart}>
       <Text style={styles.titleMatch}>Match n°{matchId._id}</Text>
       <View style={styles.users}>
-        <CartMatchUser user={match.user1} color={'blue'} />
+        <CartMatchUser user={matchId.user1} color={'blue'} />
         <Text>VS</Text>
-        <CartMatchUser user={match.user2} color={'red'} />
+        <CartMatchUser user={matchId.user2} color={'red'} />
       </View>
       <FlatList
         data={matchId.turns}
         renderItem={({item, index}) => (
-          <CartTurns turns={item} index={index} match={match} />
+          <CartTurns turns={item} index={index} match={matchId} />
         )}
       />
-      {match.winner && (
-        <Text style={styles.winner}>Result is {match.winner}</Text>
+      {matchId.winner && (
+        <Text style={styles.winner}>Result is {matchId.winner}</Text>
       )}
       {boutonPlay}
     </View>
