@@ -85,7 +85,7 @@ export default function ListMatches({navigation}) {
 
   const handlePlay = () => () => {
     actionsMatch.playMatch(selectorsUser.getJwtoken(), navigation);
-  }
+  };
 
   return (
     <View style={styles.container}>

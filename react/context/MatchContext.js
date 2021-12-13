@@ -42,7 +42,7 @@ export const MatchProvider = function({ children }) {
           setMatch(data);
         });
     },
-    playMatch: function(token, navigation, match) {
+    playMatch: function(token, navigation) {
       console.log('UseContext playMatch');
       Alert.alert("Let's play (POST /matches)");
       fetch('http://fauques.freeboxos.fr:3000/matches', {
@@ -56,16 +56,23 @@ export const MatchProvider = function({ children }) {
           res.json();
         })
         .then(data => {
-          console.log('data is');
-          console.log(data);
+          setMatch(data);
+          console.log(data)
+          if (data.user2 && data.user1){
+            navigation.navigate('PlayMatchScreen', {
+              data
+            });
+          }
+          else{
+            navigation.navigate('WaitingPlayMatchScreen', {
+              data
+            });
+          }
         })
         .catch(error => {
           console.error(error);
         });
       // Event PLAYER_JOIN
-      navigation.navigate('PlayMatchScreen', {
-        match
-      });
     },
   };
 

@@ -41,7 +41,7 @@ export default function CartMatch({match, navigation}) {
   }, [matchId]);
 
   const handlePlay = () => () => {
-    actionsMatch.playMatch(selectorsUser.getJwtoken(), navigation, matchId);
+    actionsMatch.playMatch(selectorsUser.getJwtoken(), navigation);
   };
 
   return (

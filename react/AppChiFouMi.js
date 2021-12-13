@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import PlayMatchScreen from "./screens/PlayMatchScreen";
 import { UserProvider } from "./context/UserContext";
 import { MatchProvider } from "./context/MatchContext";
+import WaitingPlayMatchScreen from "./screens/WaitingPlayMatchScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,11 @@ export default function AppChiFouMi() {
               name="PlayMatchScreen"
               component={PlayMatchScreen}
               options={{ title: "Play Match" }}
+            />
+            <Stack.Screen
+              name="WaitingPlayMatchScreen"
+              component={WaitingPlayMatchScreen}
+              options={{ title: "Attente d'un joueur" }}
             />
           </Stack.Navigator>
         </NavigationContainer>

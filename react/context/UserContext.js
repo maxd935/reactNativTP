@@ -2,7 +2,7 @@ import React, {createContext} from 'react';
 import { Alert } from "react-native";
 
 const UserContext = createContext({});
-const tokenAPI = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTA1ZTU0Ni1lZjBhLTQ5MzctOWQ2MS1hYzQxYjVlNTk0NzUiLCJ1c2VybmFtZSI6InRlc3QzIiwiaWF0IjoxNjM4OTYyODIzLCJleHAiOjE2NzA1MjA0MjN9.n2OQsc9ZhdioQ7QdZl-e0NJqQczpotCfKtLySQiP9ds'
+const tokenAPI = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI4NWJjYWVmYy0zMTRjLTRhODUtYjJhYS0xMjFkY2FmMjNkMjkiLCJ1c2VybmFtZSI6Im1heCIsImlhdCI6MTYzOTQwNDg4MSwiZXhwIjoxNjcwOTYyNDgxfQ.0f_qAXM5rSm9q65UbZS3hZCHt-bciUbYBX-St4rkBkY'
 
 
 export const UserProvider = function ({children}) {
