@@ -1,17 +1,19 @@
-import {Alert, Button, FlatList, StyleSheet, Text, View} from 'react-native';
-import CartMatchUser from './CartMatchUser';
-import React, {useContext, useEffect} from 'react';
-import CartTurns from './CartTurns';
-import UserContext from '../../context/UserContext';
-import MatchContext from '../../context/MatchContext';
+import { Alert, Button, FlatList, StyleSheet, Text, View } from "react-native";
+import CartMatchUser from "./CartMatchUser";
+import React, { useContext, useEffect } from "react";
+import CartTurns from "./CartTurns";
+import UserContext from "../../context/UserContext";
+import MatchContext from "../../context/MatchContext";
 
-export default function CartMatch({idMatch, navigation}) {
+export default function CartMatch({ idMatch, navigation }) {
   const [boutonPlay, setBoutonPlay] = React.useState(null);
 
-  const {selectorsUser} = useContext(UserContext);
 
-  const {actionsMatch, selectorsMatch} = useContext(MatchContext);
+  const { selectorsUser } = useContext(UserContext);
+
+  const { actionsMatch, selectorsMatch } = useContext(MatchContext);
   const matchId = selectorsMatch.getMatch();
+
 
   /*
     Recupere le match disponible à partir de l'id
@@ -19,7 +21,7 @@ export default function CartMatch({idMatch, navigation}) {
   */
   useEffect(() => {
     actionsMatch.loadMatch(selectorsUser.getJwtoken(), idMatch) &&
-      actionsMatch.loadMatch(selectorsUser.getJwtoken(), idMatch);
+    actionsMatch.loadMatch(selectorsUser.getJwtoken(), idMatch);
   }, []);
 
   /*
@@ -27,14 +29,17 @@ export default function CartMatch({idMatch, navigation}) {
   Si non Active le bouton pour jouer
    */
   useEffect(() => {
-    console.log(matchId);
-    if (matchId){
+    if (matchId.turns) {
       if (matchId.turns.length === 3) {
         setBoutonPlay(<Button title="Finish" disabled onPress={handlePlay()} />);
       } else if (matchId.user2 && matchId.user1) {
-        setBoutonPlay(<Button title="Playing" disabled onPress={handlePlay()} />);
+        setBoutonPlay(<Button title="Play" onPress={() => navigation.navigate('PlayMatchScreen', {
+          data: matchId,
+        })} />);
       } else {
-        setBoutonPlay(<Button title="Waiting player" disabled onPress={handlePlay()} />);
+        setBoutonPlay(<Button title="Waiting player" onPress={() => navigation.navigate('WaitingPlayMatchScreen', {
+          data: matchId,
+        })} />);
       }
     }
   }, [matchId]);
@@ -43,49 +48,59 @@ export default function CartMatch({idMatch, navigation}) {
     actionsMatch.playMatch(selectorsUser.getJwtoken(), navigation);
   };
 
+  const handleActualise = () => () => {
+    actionsMatch.loadMatch(selectorsUser.getJwtoken(), idMatch) && actionsMatch.loadMatch(selectorsUser.getJwtoken(), idMatch);
+  };
+
+  const winnerIs = () => {
+    if (matchId.turns.length === 3) return (
+  <Text style={styles.winner}>{matchId.winner ? "Winner is " + matchId.winner.username : "DRAW"}</Text>)
+  }
+
   return (
-    <View style={styles.cart}>
-      <Text style={styles.titleMatch}>Match n°{matchId._id}</Text>
-      <View style={styles.users}>
-        <CartMatchUser user={matchId.user1} color={'blue'} />
-        <Text>VS</Text>
-        <CartMatchUser user={matchId.user2} color={'red'} />
+    <View>
+      <View style={styles.cart}>
+        <Text style={styles.titleMatch}>Match n°{matchId._id}</Text>
+        <View style={styles.users}>
+          <CartMatchUser user={matchId.user1} color={"blue"} />
+          <Text>VS</Text>
+          <CartMatchUser user={matchId.user2} color={"red"} />
+        </View>
+        <FlatList
+          data={matchId.turns}
+          renderItem={({ item, index }) => (
+            <CartTurns turns={item} index={index} match={matchId} />
+          )}
+        />
+        { matchId.turns && winnerIs()}
+        {boutonPlay}
       </View>
-      <FlatList
-        data={matchId.turns}
-        renderItem={({item, index}) => (
-          <CartTurns turns={item} index={index} match={matchId} />
-        )}
-      />
-      {matchId.winner && (
-        <Text style={styles.winner}>Result is {matchId.winner}</Text>
-      )}
-      {boutonPlay}
+      <Button title="Actualiser le match" onPress={handleActualise()} />
     </View>
+
   );
 }
 
 const styles = StyleSheet.create({
   cart: {
-    alignContent: 'center',
-    textAlign: 'center',
+    alignContent: "center",
+    textAlign: "center",
     margin: 10,
     borderWidth: 1,
     padding: 10,
-    backgroundColor: '#dedede',
+    backgroundColor: "#dedede",
   },
   titleMatch: {
-    textAlign: 'center',
+    textAlign: "center",
   },
   winner: {
-    textAlign: 'center',
-    textDecoration: 'overline',
+    textAlign: "center",
   },
   users: {
     margin: 5,
     padding: 10,
-    flexDirection: 'row',
-    alignContent: 'center',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "space-around",
   },
 });

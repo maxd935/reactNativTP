@@ -53,7 +53,7 @@ export default function ListMatches({navigation}) {
 
 const styles = StyleSheet.create({
   container : {
-    flew:1,
+    flex:1,
   },
   user: {
     textAlign: 'center',

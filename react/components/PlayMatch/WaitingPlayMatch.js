@@ -7,18 +7,28 @@ export default function WaitingPlayMatch({match, navigation}) {
 
   const {selectorsUser} = useContext(UserContext);
   const {selectorsMatch, actionsMatch} = useContext(MatchContext);
+  const matchWaiting = selectorsMatch.getMatch();
 
+
+  /*
+    Recupere le match disponible à partir de l'id
+    avec le Jwtoken
+  */
+  useEffect(() => {
+    actionsMatch.loadMatch(selectorsUser.getJwtoken(), match._id) &&
+    actionsMatch.loadMatch(selectorsUser.getJwtoken(), match._id);
+  }, []);
 
   useEffect(() => {
-    if (match.user2 && match.user1) {
+    if (matchWaiting.user2 && matchWaiting.user1) {
       navigation.navigate('PlayMatchScreen', {
-        match,
+        matchWaiting,
       });
     }
   }, [match]);
 
   const handleActualise = () => () => {
-    actionsMatch.loadMatches(selectorsUser.getJwtoken()) && actionsMatch.loadMatches(selectorsUser.getJwtoken());
+    actionsMatch.loadMatch(selectorsUser.getJwtoken(), match._id) && actionsMatch.loadMatch(selectorsUser.getJwtoken(), match._id);
   };
 
   return (

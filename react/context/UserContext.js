@@ -8,7 +8,6 @@ export const UserProvider = function ({children}) {
 
   const actionsUser = {
     loadJwtoken: function (NewUsername, navigation) {
-      console.log('UseContext loadJwtoken');
       fetch('http://fauques.freeboxos.fr:3000/login', {
         method: 'POST',
         headers: {
@@ -30,14 +29,12 @@ export const UserProvider = function ({children}) {
         });
     },
     setUsername: function (NewUsername) {
-      console.log('UseContext setUsername');
       setUsername(NewUsername);
     },
   };
 
   const selectorsUser = {
     getJwtoken: function getJwtoken() {
-      console.log(jwtoken);
       return jwtoken;
     },
     getUsername: function getUsername() {

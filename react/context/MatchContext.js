@@ -13,7 +13,6 @@ export const MatchProvider = function ({children}) {
   avec le Jwtoken
    */
     loadMatches: function (token) {
-      console.log('UseContext loadMatches');
       fetch('http://fauques.freeboxos.fr:3000/matches', {
         headers: {
           Authorization: 'Bearer ' + token,
@@ -21,12 +20,10 @@ export const MatchProvider = function ({children}) {
       })
         .then(res => res.json())
         .then(data => {
-          console.log(data);
           setMatches(data);
         });
     },
     loadMatch: function (token, id) {
-      console.log('UseContext loadMatch');
       fetch('http://fauques.freeboxos.fr:3000/matches/' + id, {
         headers: {
           Authorization: 'Bearer ' + token,
@@ -38,7 +35,6 @@ export const MatchProvider = function ({children}) {
         });
     },
     playMatch: function (token, navigation) {
-      console.log('UseContext playMatch');
       fetch('http://fauques.freeboxos.fr:3000/matches', {
         method: 'POST',
         headers: {
@@ -49,7 +45,6 @@ export const MatchProvider = function ({children}) {
           return res.json();
         })
         .then(data => {
-          console.log(data);
           if (!data.match) {
             setMatch(data);
           }
@@ -74,13 +69,13 @@ export const MatchProvider = function ({children}) {
       // Event PLAYER_JOIN
     },
     playTurn: function (token, nbrTurn, choice, idMatch) {
-      console.log('UseEffect Play ' + choice);
       fetch(
         'http://fauques.freeboxos.fr:3000/matches/' +
           idMatch +
           '/turns/' +
           nbrTurn,
         {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + token,
@@ -91,10 +86,21 @@ export const MatchProvider = function ({children}) {
         },
       )
         .then(res => {
+          if (res.status === 202) {
+            Alert.alert('Good move');
+          }
+          else
           return res.json();
         })
         .then(data => {
-          console.log(data);
+          if(data){
+            if(data.turn){
+              Alert.alert('move already given, waiting other player');
+            }
+            else if(data.user) {
+              Alert.alert('move already given, waiting other player');
+            }
+          }
         })
         .catch(error => {
           console.error(error);

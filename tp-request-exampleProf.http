@@ -7,33 +7,34 @@ Content-Type: application/json
 
 ### GET Matches
 GET http://fauques.freeboxos.fr:3000/matches
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJjYWUxNDcxYy0zYjY1LTRhYjItOTMzYi1jNTk3NzAwOTMyZjEiLCJ1c2VybmFtZSI6InRvdG8iLCJpYXQiOjE2Mzk0MzI3ODIsImV4cCI6MTY3MDk5MDM4Mn0.5HDNSotWmMFbrGhonJzI9ZXAgyVtlpE8THhECwpBzq0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI4NWJjYWVmYy0zMTRjLTRhODUtYjJhYS0xMjFkY2FmMjNkMjkiLCJ1c2VybmFtZSI6Im1heCIsImlhdCI6MTYzOTg0MDkyMCwiZXhwIjoxNjcxMzk4NTIwfQ.Fy_oQnUQ0tR7Rjwp5h84nR66Vvsdnq31EApauo3_vXU
 
 ### GET Match test/test3
-GET http://fauques.freeboxos.fr:3000/matches/61b498071053fe731065bc1c
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJkYWZmMWYyYi0xMDU5LTQwZGQtYjdlMi1jODMzMDE1ZGVlZWIiLCJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE2MzkyMjQzNDQsImV4cCI6MTY3MDc4MTk0NH0.jUdcZcUSXbCn4927j2YzUSCLL5i7LCwk4M8zbUG-NQk
+GET http://fauques.freeboxos.fr:3000/matches/61bde90e1053fe731065dda7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI4NWJjYWVmYy0zMTRjLTRhODUtYjJhYS0xMjFkY2FmMjNkMjkiLCJ1c2VybmFtZSI6Im1heCIsImlhdCI6MTYzOTgzNDI4NywiZXhwIjoxNjcxMzkxODg3fQ.q6Vhnbep2ZlEXCJ_OZJnxBWGk3JI0AsauqpYkpr5t60
 
 ### GET Match test/test3 Token different
 GET http://fauques.freeboxos.fr:3000/matches/61b498071053fe731065bc1c
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTA1ZTU0Ni1lZjBhLTQ5MzctOWQ2MS1hYzQxYjVlNTk0NzUiLCJ1c2VybmFtZSI6InRlc3QzIiwiaWF0IjoxNjM4OTYyODIzLCJleHAiOjE2NzA1MjA0MjN9.n2OQsc9ZhdioQ7QdZl-e0NJqQczpotCfKtLySQiP9ds
 
 
-### POST MATCH test3
+### POST MATCH max
 POST http://fauques.freeboxos.fr:3000/matches
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTA1ZTU0Ni1lZjBhLTQ5MzctOWQ2MS1hYzQxYjVlNTk0NzUiLCJ1c2VybmFtZSI6InRlc3QzIiwiaWF0IjoxNjM4OTYyODIzLCJleHAiOjE2NzA1MjA0MjN9.n2OQsc9ZhdioQ7QdZl-e0NJqQczpotCfKtLySQiP9ds
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI4NWJjYWVmYy0zMTRjLTRhODUtYjJhYS0xMjFkY2FmMjNkMjkiLCJ1c2VybmFtZSI6Im1heCIsImlhdCI6MTYzOTgzNDI4NywiZXhwIjoxNjcxMzkxODg3fQ.q6Vhnbep2ZlEXCJ_OZJnxBWGk3JI0AsauqpYkpr5t60
 
 ### POST MATCH test
 POST http://fauques.freeboxos.fr:3000/matches
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJjYWUxNDcxYy0zYjY1LTRhYjItOTMzYi1jNTk3NzAwOTMyZjEiLCJ1c2VybmFtZSI6InRvdG8iLCJpYXQiOjE2Mzk0MzI3ODIsImV4cCI6MTY3MDk5MDM4Mn0.5HDNSotWmMFbrGhonJzI9ZXAgyVtlpE8THhECwpBzq0
 
 
-### POST MOVE 1 test3
-POST http://fauques.freeboxos.fr:3000/matches/61b494e61053fe731065bbef/turns/1
+### POST MOVE 1 max
+### scissors paper rock
+POST http://fauques.freeboxos.fr:3000/matches/61bde90e1053fe731065dda7/turns/3
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTA1ZTU0Ni1lZjBhLTQ5MzctOWQ2MS1hYzQxYjVlNTk0NzUiLCJ1c2VybmFtZSI6InRlc3QzIiwiaWF0IjoxNjM4OTYyODIzLCJleHAiOjE2NzA1MjA0MjN9.n2OQsc9ZhdioQ7QdZl-e0NJqQczpotCfKtLySQiP9ds
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI4NWJjYWVmYy0zMTRjLTRhODUtYjJhYS0xMjFkY2FmMjNkMjkiLCJ1c2VybmFtZSI6Im1heCIsImlhdCI6MTYzOTgzNzk3NywiZXhwIjoxNjcxMzk1NTc3fQ.d5IQMWJGYihtuRw0fpSZ8p7zRT-slCNR8uWyDrAyyKk
 
 {
-  "move": "rock"
+  "move": "scissors"
 }
 
 ### POST MOVE 1 test
@@ -81,3 +82,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJkYWZmMWYyY
 {
   "move": "scissors"
 }
+
+
+### Subcribe matches/:id/subscribe
+GET http://fauques.freeboxos.fr:3000/matches/61bdef931053fe731065de10/subscribe
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI4NWJjYWVmYy0zMTRjLTRhODUtYjJhYS0xMjFkY2FmMjNkMjkiLCJ1c2VybmFtZSI6Im1heCIsImlhdCI6MTYzOTg0MDkyMCwiZXhwIjoxNjcxMzk4NTIwfQ.Fy_oQnUQ0tR7Rjwp5h84nR66Vvsdnq31EApauo3_vXU
