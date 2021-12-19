@@ -7,6 +7,7 @@ export const MatchProvider = function ({children}) {
   const [matches, setMatches] = React.useState([]);
   const [match, setMatch] = React.useState([]);
 
+
   const actionsMatch = {
     /*
   Recupere la liste de match disponible
@@ -87,7 +88,7 @@ export const MatchProvider = function ({children}) {
       )
         .then(res => {
           if (res.status === 202) {
-            Alert.alert('Good move');
+            Alert.alert('Actualise');
           }
           else
           return res.json();

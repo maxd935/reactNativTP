@@ -31,7 +31,11 @@ export default function CartMatch({ idMatch, navigation }) {
   useEffect(() => {
     if (matchId.turns) {
       if (matchId.turns.length === 3) {
-        setBoutonPlay(<Button title="Finish" disabled onPress={handlePlay()} />);
+        if (matchId.turns[2].winner) {
+          setBoutonPlay(<Button title="Finish" disabled onPress={handlePlay()} />);
+        } else setBoutonPlay(<Button title="Play" onPress={() => navigation.navigate('PlayMatchScreen', {
+          data: matchId,
+        })} />)
       } else if (matchId.user2 && matchId.user1) {
         setBoutonPlay(<Button title="Play" onPress={() => navigation.navigate('PlayMatchScreen', {
           data: matchId,
@@ -53,8 +57,11 @@ export default function CartMatch({ idMatch, navigation }) {
   };
 
   const winnerIs = () => {
-    if (matchId.turns.length === 3) return (
-  <Text style={styles.winner}>{matchId.winner ? "Winner is " + matchId.winner.username : "DRAW"}</Text>)
+    if (matchId.turns.length === 3) {
+      if (matchId.turns[2].winner)
+      return (
+        <Text style={styles.winner}>{matchId.winner ? "Winner is " + matchId.winner.username : "DRAW"}</Text>);
+    }
   }
 
   return (

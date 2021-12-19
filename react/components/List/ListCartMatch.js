@@ -5,8 +5,11 @@ import React from "react";
 export default function ListCartMatch({ match, navigation }) {
 
   const winnerIs = () => {
-    if (match.turns.length === 3) return (
-      <Text style={styles.winner}>{match.winner ? "Winner is " + match.winner.username : "DRAW"}</Text>)
+    if (match.turns.length === 3) {
+      if (match.turns[2].winner)
+        return (
+          <Text style={styles.winner}>{match.winner ? "Winner is " + match.winner.username : "DRAW"}</Text>);
+    }
   }
 
   return (

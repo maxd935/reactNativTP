@@ -7,11 +7,12 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-import React, {useContext, useEffect} from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import UserContext from '../../context/UserContext';
 import MatchContext from '../../context/MatchContext';
 import CartTurns from '../Matches/CartTurns';
 import CartMatchUser from '../Matches/CartMatchUser';
+import EventSource from "react-native-sse";
 
 export default function PlayMatch({match}) {
   const {selectorsUser} = useContext(UserContext);
@@ -26,7 +27,65 @@ export default function PlayMatch({match}) {
   useEffect(() => {
     actionsMatch.loadMatch(selectorsUser.getJwtoken(), match._id) &&
       actionsMatch.loadMatch(selectorsUser.getJwtoken(), match._id);
+
+    const evtSource = new EventSource('http://fauques.freeboxos.fr:3000/matches/' + match._id + '/subscribe', {
+      headers: {
+        Authorization: "Bearer " + selectorsUser.getJwtoken(),
+      },
+    });
+    console.log(evtSource)
+
+    evtSource.addEventListener("open", (event) => {
+      console.log("Open SSE connection.");
+    });
+
+    evtSource
+      .addEventListener("message", (event) => {
+        console.log("message")
+        console.log(event)
+        console.log(event.data);
+      })
+
+    evtSource
+      .addEventListener("PLAYER1_JOIN", (event) => {
+        console.log("PLAYER1_JOIN")
+        console.log(event)
+        console.log(event.data);
+      })
+
+    evtSource.addEventListener("error", (err) => {
+      console.error("EventSource failed:", err);
+    });
+
+    evtSource.close((event) => {
+      console.log("SSE close")
+      }
+    );
+    console.log(evtSource)
+
+
   }, []);
+
+  const myUserNumber =() =>{
+    if(matchId.user1.username === selectorsUser.getUsername()){
+      return 'user1'
+    }else return 'user2'
+  }
+
+  const nbrTurnFunction = () => {
+    if(matchId.turns.length===0) {
+      return matchId.turns.length + 1;
+    }
+    if (myUserNumber()==='user1') {
+      if (matchId.turns[matchId.turns.length - 1].user1) {
+        return matchId.turns.length + 1;
+      } else return matchId.turns.length;
+    }else {
+      if (matchId.turns[matchId.turns.length - 1].user2) {
+        return matchId.turns.length + 1;
+      } else return matchId.turns.length;
+    }
+  }
 
   /*
   Jouer le coup du match id
@@ -36,11 +95,10 @@ export default function PlayMatch({match}) {
   const handlePlayChoix = choix => () => {
     actionsMatch.playTurn(
       selectorsUser.getJwtoken(),
-      matchId.turns.length + 1,
+      nbrTurnFunction(),
       choix,
       matchId._id,
     );
-    handleActualise();
   };
 
   const handleActualise = () => () => {
@@ -66,6 +124,32 @@ export default function PlayMatch({match}) {
               }}>
               {matchId.winner ? 'Winner is ' + matchId.winner.username : 'DRAW'}
             </Text>
+          </View>
+        );
+      }else {
+        return (
+          <View style={styles.container}>
+            <TouchableHighlight
+              style={styles.touchable}
+              onPress={handlePlayChoix('rock')}>
+              <View style={styles.button}>
+                <Text style={styles.text}>Pierre</Text>
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight
+              style={styles.touchable}
+              onPress={handlePlayChoix('paper')}>
+              <View style={styles.button}>
+                <Text style={styles.text}>Feuille</Text>
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight
+              style={styles.touchable}
+              onPress={handlePlayChoix('scissors')}>
+              <View style={styles.button}>
+                <Text style={styles.text}>Ciseaux</Text>
+              </View>
+            </TouchableHighlight>
           </View>
         );
       }

@@ -84,6 +84,3 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJkYWZmMWYyY
 }
 
 
-### Subcribe matches/:id/subscribe
-GET http://fauques.freeboxos.fr:3000/matches/61bdef931053fe731065de10/subscribe
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI4NWJjYWVmYy0zMTRjLTRhODUtYjJhYS0xMjFkY2FmMjNkMjkiLCJ1c2VybmFtZSI6Im1heCIsImlhdCI6MTYzOTg0MDkyMCwiZXhwIjoxNjcxMzk4NTIwfQ.Fy_oQnUQ0tR7Rjwp5h84nR66Vvsdnq31EApauo3_vXU
